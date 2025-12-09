@@ -1,4 +1,4 @@
-import React, { MouseEvent, TouchEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { 
   Sparkles, 
   Droplets, 
