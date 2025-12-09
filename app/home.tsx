@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 
 // --- Utility for loading scripts (GSAP) ---
-const useScript = (src) => {
+const useScript = (src : string) => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = src;
