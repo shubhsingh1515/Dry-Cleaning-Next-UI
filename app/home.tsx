@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, TouchEvent, useEffect, useRef, useState } from 'react';
 import { 
   Sparkles, 
   Droplets, 
@@ -40,6 +40,8 @@ const useScript = (src : string) => {
     }
   }, [src]);
 };
+
+const containerRef = useRef<HTMLDivElement>(null);
 
 // --- Components ---
 
@@ -570,13 +572,24 @@ const Gallery = () => {
   const containerRef = useRef(null);
   const isDragging = useRef(false);
 
-  const handleMove = (event) => {
-    if (!containerRef.current) return;
-    const { left, width } = containerRef.current.getBoundingClientRect();
-    const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-    const position = ((clientX - left) / width) * 100;
-    setSliderPosition(Math.min(100, Math.max(0, position)));
-  };
+ const handleMove = (event: MouseEvent | TouchEvent) => {
+  if (!containerRef.current) return;
+
+  const { left, width } = containerRef.current.getBoundingClientRect();
+
+  let clientX: number;
+
+  if (event instanceof TouchEvent) {
+    clientX = event.touches[0]?.clientX ?? 0;
+  } else {
+    clientX = event.clientX;
+  }
+
+  const position = ((clientX - left) / width) * 100;
+
+  setSliderPosition(Math.min(100, Math.max(0, position)));
+};
+
 
   return (
     <section id="gallery" className="py-24 bg-[#0A121B]">
